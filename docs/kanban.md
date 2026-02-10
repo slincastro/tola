@@ -6,14 +6,17 @@ config:
 ---
 kanban
   Todo
-    [Create a Definition of the General description of the Product]
     [Diagram of Clean Architecture for Catalog]
     [Path to Production]
     [Test Strategy]
-    [Create Infrastructure]
+    [1.- Create Infrastructure]
+    [2.- User Onboarding]
 
   [In progress]
     [Chose Database for Catalog]
   id11[Done]
+    [Architecture Flow Diagram]
     id5[Enable AWS Account]
     [Create Repo]
+    [Create a Definition of the General description of the Product]
+
