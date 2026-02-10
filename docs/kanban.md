@@ -9,8 +9,8 @@ kanban
     [Diagram of Clean Architecture for Catalog]
     [Path to Production]
     [Test Strategy]
-    [Create Infrastructure]
-    [User Onboarding]
+    [1.- Create Infrastructure]
+    [2.- User Onboarding]
 
   [In progress]
     [Chose Database for Catalog]
