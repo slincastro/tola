@@ -135,7 +135,7 @@ Product lifecycle changes emit domain events (e.g. ProductCreated, ProductPublis
 
 **Catalog Database:** Document-oriented
 
-**Primary candidate:** DynamoDB
+**Primary candidate:** Mongo Aurora
 
 Mongo-style modeling (denormalized, aggregate-oriented)
 
