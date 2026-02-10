@@ -10,6 +10,7 @@ kanban
     [Path to Production]
     [Test Strategy]
     [Create Infrastructure]
+    [User Onboarding]
 
   [In progress]
     [Chose Database for Catalog]
