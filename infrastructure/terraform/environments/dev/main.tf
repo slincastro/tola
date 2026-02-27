@@ -2,6 +2,25 @@ locals {
   name_prefix = "${var.project_name}-${var.environment}"
 }
 
+# MongoDB Atlas Cluster
+module "mongodb_atlas" {
+  source = "../../modules/mongodb_atlas"
+
+  project_name   = var.project_name
+  environment    = var.environment
+  org_id         = var.mongodb_atlas_org_id
+  db_username    = var.mongodb_db_username
+  db_password    = var.mongodb_db_password
+  
+  # Cluster configuration - adjust as needed
+  cluster_name   = "${var.project_name}-cluster"
+  cluster_tier   = "M0"  # Free tier - change for production
+  cluster_region = "US_EAST_1"
+  
+  # For production, consider setting these to appropriate values
+  allowed_cidr_blocks = ["0.0.0.0/0"]  # For development only, restrict this in production
+}
+
 # S3 Bucket for product images
 module "s3_bucket" {
   source = "../../modules/s3"
@@ -34,9 +53,10 @@ module "lambda" {
   s3_bucket_arn  = module.s3_bucket.bucket_arn
   
   environment_variables = {
-    MONGODB_CONNECTION_STRING = var.mongodb_connection_string
+    MONGODB_CONNECTION_STRING = module.mongodb_atlas.srv_connection_string
     S3_BUCKET_NAME            = module.s3_bucket.bucket_name
     AUTH_ENABLED              = var.auth_enabled
+    MONGODB_DATABASE_NAME     = module.mongodb_atlas.database_name
   }
 }
 

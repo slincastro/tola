@@ -16,12 +16,41 @@ variable "environment" {
   default     = "dev"
 }
 
-variable "mongodb_connection_string" {
-  description = "MongoDB Atlas connection string"
+variable "mongodb_atlas_public_key" {
+  description = "MongoDB Atlas public API key"
   type        = string
   sensitive   = true
-  # This should be provided via .tfvars or environment variables
-  # DO NOT hardcode this value
+}
+
+variable "mongodb_atlas_private_key" {
+  description = "MongoDB Atlas private API key"
+  type        = string
+  sensitive   = true
+}
+
+variable "mongodb_atlas_org_id" {
+  description = "MongoDB Atlas organization ID"
+  type        = string
+}
+
+variable "mongodb_db_username" {
+  description = "MongoDB Atlas database username"
+  type        = string
+  default     = "tola-app-user"
+}
+
+variable "mongodb_db_password" {
+  description = "MongoDB Atlas database password"
+  type        = string
+  sensitive   = true
+}
+
+# This variable is kept for backward compatibility but will be populated from the module output
+variable "mongodb_connection_string" {
+  description = "MongoDB Atlas connection string (populated from module output)"
+  type        = string
+  sensitive   = true
+  default     = ""
 }
 
 variable "auth_enabled" {

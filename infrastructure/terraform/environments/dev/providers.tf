@@ -10,6 +10,11 @@ provider "aws" {
   }
 }
 
+provider "mongodbatlas" {
+  public_key  = var.mongodb_atlas_public_key
+  private_key = var.mongodb_atlas_private_key
+}
+
 terraform {
   required_version = ">= 1.0.0"
 
@@ -17,6 +22,11 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 4.0"
+    }
+    
+    mongodbatlas = {
+      source  = "mongodb/mongodbatlas"
+      version = "~> 1.10.0"
     }
   }
 
