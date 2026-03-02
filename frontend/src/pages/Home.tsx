@@ -19,8 +19,8 @@ export function HomePage() {
   return (
     <div className="space-y-4">
       <Card>
-        <div className="overflow-hidden rounded-xl border border-[#B89B5E]/35 bg-[#1F3A2E]">
-          <img src={sumakpampaMain} alt="Sumakpampa main" className="h-72 w-full object-cover sm:h-96" />
+        <div className="overflow-hidden rounded-xl ">
+          <img src={sumakpampaMain} alt="Sumakpampa main"  />
         </div>
       </Card>
     </div>

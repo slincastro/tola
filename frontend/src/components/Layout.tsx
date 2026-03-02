@@ -10,7 +10,6 @@ export function Layout() {
             <h1 className="text-xl font-bold tracking-tight">Sumakpampa</h1>
             <p className="text-xs text-[#E8E2D6]/80">Product orchestration UI</p>
           </div>
-          <span className="rounded-full border border-[#B89B5E] px-3 py-1 text-xs text-[#B89B5E]">Dashboard</span>
         </div>
       </header>
 
@@ -26,8 +25,8 @@ export function Layout() {
 
       <footer className="mt-8 border-t border-[#B89B5E]/40 bg-[#1F3A2E] text-[#E8E2D6]">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 text-sm">
-          <p>Sumakpampa Platform</p>
-          <p className="text-[#B89B5E]">Built for resilient land data workflows</p>
+          <p>Tola Platform</p>
+          <p className="text-[#B89B5E]">Ven a vivir en el campo ...</p>
         </div>
       </footer>
     </div>
