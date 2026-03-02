@@ -1,0 +1,46 @@
+#!/bin/bash
+set -euxo pipefail
+
+DEVICE=""
+ROOT_SOURCE="$(findmnt -n -o SOURCE / || true)"
+
+for _ in $(seq 1 30); do
+  for candidate in /dev/nvme1n1 /dev/xvdb /dev/sdb; do
+    if [ -b "$candidate" ] && [ "$candidate" != "$ROOT_SOURCE" ]; then
+      DEVICE="$candidate"
+      break
+    fi
+  done
+
+  if [ -n "$DEVICE" ]; then
+    break
+  fi
+
+  sleep 2
+done
+
+if [ -z "$DEVICE" ]; then
+  echo "Mongo EBS device not found" >&2
+  exit 1
+fi
+
+if ! blkid "$DEVICE" >/dev/null 2>&1; then
+  mkfs.ext4 -F "$DEVICE"
+fi
+
+mkdir -p /var/lib/mongo
+UUID="$(blkid -s UUID -o value "$DEVICE")"
+
+if ! grep -q "$UUID" /etc/fstab; then
+  echo "UUID=$UUID /var/lib/mongo ext4 defaults,nofail 0 2" >> /etc/fstab
+fi
+
+mount -a
+chown 999:999 /var/lib/mongo
+chmod 700 /var/lib/mongo
+
+if ! grep -q '^ECS_CLUSTER=' /etc/ecs/ecs.config 2>/dev/null; then
+  echo "ECS_CLUSTER=${ecs_cluster_name}" >> /etc/ecs/ecs.config
+else
+  sed -i "s/^ECS_CLUSTER=.*/ECS_CLUSTER=${ecs_cluster_name}/" /etc/ecs/ecs.config
+fi

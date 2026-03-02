@@ -2,25 +2,6 @@ locals {
   name_prefix = "${var.project_name}-${var.environment}"
 }
 
-# MongoDB Atlas Cluster
-module "mongodb_atlas" {
-  source = "../../modules/mongodb_atlas"
-
-  project_name   = var.project_name
-  environment    = var.environment
-  org_id         = var.mongodb_atlas_org_id
-  db_username    = var.mongodb_db_username
-  db_password    = var.mongodb_db_password
-  
-  # Cluster configuration - adjust as needed
-  cluster_name   = "${var.project_name}-cluster"
-  cluster_tier   = "M0"  # Free tier - change for production
-  cluster_region = "US_EAST_1"
-  
-  # For production, consider setting these to appropriate values
-  allowed_cidr_blocks = ["0.0.0.0/0"]  # For development only, restrict this in production
-}
-
 # S3 Bucket for product images
 module "s3_bucket" {
   source = "../../modules/s3"
@@ -33,11 +14,11 @@ module "s3_bucket" {
 module "api_gateway" {
   source = "../../modules/api_gateway"
 
-  name_prefix    = local.name_prefix
-  environment    = var.environment
-  lambda_arn     = module.lambda.lambda_function_arn
-  lambda_name    = module.lambda.lambda_function_name
-  auth_enabled   = var.auth_enabled
+  name_prefix          = local.name_prefix
+  environment          = var.environment
+  lambda_arn           = module.lambda.lambda_function_arn
+  lambda_name          = module.lambda.lambda_function_name
+  auth_enabled         = var.auth_enabled
   cognito_user_pool_id = var.auth_enabled ? module.cognito[0].user_pool_id : ""
 }
 
@@ -51,12 +32,12 @@ module "lambda" {
   timeout        = var.lambda_timeout
   s3_bucket_name = module.s3_bucket.bucket_name
   s3_bucket_arn  = module.s3_bucket.bucket_arn
-  
+
   environment_variables = {
-    MONGODB_CONNECTION_STRING = module.mongodb_atlas.srv_connection_string
+    MONGODB_CONNECTION_STRING = var.enable_ecs_mongo ? module.mongodb_ecs_ec2[0].mongo_connection_string_example : var.mongodb_connection_string
     S3_BUCKET_NAME            = module.s3_bucket.bucket_name
     AUTH_ENABLED              = var.auth_enabled
-    MONGODB_DATABASE_NAME     = module.mongodb_atlas.database_name
+    MONGODB_DATABASE_NAME     = "admin"
   }
 }
 
@@ -67,4 +48,24 @@ module "cognito" {
 
   user_pool_name = "${local.name_prefix}-users"
   environment    = var.environment
+}
+
+module "mongodb_ecs_ec2" {
+  source = "../../modules/mongodb_ecs_ec2"
+  count  = var.enable_ecs_mongo ? 1 : 0
+
+  project_name = var.project_name
+  environment  = var.environment
+  aws_region   = var.aws_region
+
+  create_vpc                  = var.create_vpc
+  vpc_cidr                    = var.vpc_cidr
+  existing_vpc_id             = var.existing_vpc_id
+  existing_private_subnet_ids = var.existing_private_subnet_ids
+  existing_public_subnet_ids  = var.existing_public_subnet_ids
+
+  instance_type       = var.mongo_instance_type
+  mongo_ebs_size_gb   = var.mongo_ebs_size_gb
+  mongo_root_username = var.mongo_root_username
+  mongo_root_password = var.mongo_root_password
 }

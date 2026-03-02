@@ -10,14 +10,13 @@ Tola uses a serverless architecture on AWS with the following components:
 - **Lambda**: Python-based API using FastAPI framework
 - **S3**: Storage for product images
 - **Cognito**: (Optional) Authentication for API access
-- **MongoDB Atlas**: External database service for product data (not managed by Terraform)
+- **MongoDB on ECS EC2**: Internal MongoDB service with EBS-backed persistence
 
 ## Prerequisites
 
 1. [Terraform](https://www.terraform.io/downloads.html) (v1.0.0 or later)
 2. [AWS CLI](https://aws.amazon.com/cli/) installed and configured with appropriate credentials
-3. A MongoDB Atlas account with a cluster set up
-4. MongoDB connection string
+3. AWS account permissions to create ECS/EC2/VPC/IAM resources
 
 ## Project Structure
 
@@ -47,7 +46,9 @@ Create a `terraform.tfvars` file in the `environments/dev` directory with the fo
 aws_region = "us-east-1"  # Choose your preferred region
 project_name = "tola"
 environment = "dev"
-mongodb_connection_string = "mongodb+srv://username:password@your-cluster.mongodb.net/tola-dev?retryWrites=true&w=majority"
+enable_ecs_mongo = true
+mongo_root_username = "admin"
+mongo_root_password = "replace-with-strong-password"
 auth_enabled = false  # Set to true if you want to enable Cognito authentication
 ```
 
@@ -105,7 +106,6 @@ Type 'yes' when prompted to confirm.
 ## Additional Notes
 
 - For production environments, consider enabling a remote backend for state storage (e.g., S3 with DynamoDB for locking).
-- Update the MongoDB Atlas IP allowlist if you're restricting access by IP.
 - The Lambda function includes a placeholder implementation. Replace it with your actual application code.
 - The Lambda function uses Python 3.10 runtime, which is the latest version supported by AWS Lambda at the time of writing.
 - The Cognito configuration includes email verification and supports custom attributes for merchant_id and role. The configuration uses verification_message_template instead of auto_verification_email.

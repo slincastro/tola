@@ -16,38 +16,8 @@ variable "environment" {
   default     = "dev"
 }
 
-variable "mongodb_atlas_public_key" {
-  description = "MongoDB Atlas public API key"
-  type        = string
-  sensitive   = true
-}
-
-variable "mongodb_atlas_private_key" {
-  description = "MongoDB Atlas private API key"
-  type        = string
-  sensitive   = true
-}
-
-variable "mongodb_atlas_org_id" {
-  description = "MongoDB Atlas organization ID"
-  type        = string
-}
-
-variable "mongodb_db_username" {
-  description = "MongoDB Atlas database username"
-  type        = string
-  default     = "tola-app-user"
-}
-
-variable "mongodb_db_password" {
-  description = "MongoDB Atlas database password"
-  type        = string
-  sensitive   = true
-}
-
-# This variable is kept for backward compatibility but will be populated from the module output
 variable "mongodb_connection_string" {
-  description = "MongoDB Atlas connection string (populated from module output)"
+  description = "MongoDB connection string used when ECS Mongo is disabled"
   type        = string
   sensitive   = true
   default     = ""
@@ -69,4 +39,64 @@ variable "lambda_timeout" {
   description = "Timeout for Lambda functions in seconds"
   type        = number
   default     = 15
+}
+
+variable "enable_ecs_mongo" {
+  description = "Whether to deploy MongoDB on ECS EC2 with EBS"
+  type        = bool
+  default     = true
+}
+
+variable "create_vpc" {
+  description = "Whether to create a VPC for MongoDB ECS resources"
+  type        = bool
+  default     = true
+}
+
+variable "vpc_cidr" {
+  description = "VPC CIDR block when create_vpc is true"
+  type        = string
+  default     = "10.42.0.0/16"
+}
+
+variable "existing_vpc_id" {
+  description = "Existing VPC ID when create_vpc is false"
+  type        = string
+  default     = null
+}
+
+variable "existing_private_subnet_ids" {
+  description = "Existing private subnets when create_vpc is false"
+  type        = list(string)
+  default     = []
+}
+
+variable "existing_public_subnet_ids" {
+  description = "Existing public subnets when create_vpc is false"
+  type        = list(string)
+  default     = []
+}
+
+variable "mongo_instance_type" {
+  description = "EC2 instance type for MongoDB ECS host"
+  type        = string
+  default     = "t3.small"
+}
+
+variable "mongo_ebs_size_gb" {
+  description = "MongoDB EBS volume size in GB"
+  type        = number
+  default     = 50
+}
+
+variable "mongo_root_username" {
+  description = "MongoDB root username for ECS-hosted Mongo"
+  type        = string
+  default     = "admin"
+}
+
+variable "mongo_root_password" {
+  description = "MongoDB root password for ECS-hosted Mongo"
+  type        = string
+  sensitive   = true
 }

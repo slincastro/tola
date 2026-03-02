@@ -31,7 +31,7 @@ API Gateway (HTTP API)
    ↓
 Lambda (FastAPI)
    ↓
-MongoDB Atlas (M0)
+MongoDB on ECS (EC2 + EBS)
    ↓
 Amazon S3 (Images)
 
@@ -113,15 +113,15 @@ Integrating with Mongo and S3
 7. Database Layer (Mongo)
 MongoDB (Primary Catalog Store)
 
-MongoDB Atlas
+MongoDB on ECS (EC2)
 
-Cluster tier: M0 (Free Tier)
+Single node on ECS EC2 with EBS persistence
 
-Region: close to AWS Lambda region
+Region: same as AWS Lambda region
 
 Network:
 
-IP allowlist: 0.0.0.0/0 (DEV only)
+Private VPC access only (no public database endpoint)
 
 Authentication:
 
