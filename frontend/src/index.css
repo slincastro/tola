@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Space Grotesk", "Manrope", "Segoe UI", sans-serif;
+  color: #182226;
+  background: #f7faf9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(31, 159, 118, 0.16), transparent 42%),
+    radial-gradient(circle at 84% 14%, rgba(229, 144, 47, 0.16), transparent 38%),
+    #f7faf9;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
