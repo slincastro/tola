@@ -3,13 +3,19 @@ import { Navigation } from "@/components/Navigation";
 
 export function Layout() {
   return (
-    <div className="min-h-screen bg-cloud text-ink">
+    <div className="min-h-screen bg-[#E8E2D6] text-ink">
+      <header className="border-b border-[#B89B5E]/40 bg-[#1F3A2E] text-[#E8E2D6]">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
+          <div>
+            <h1 className="text-xl font-bold tracking-tight">Sumakpampa</h1>
+            <p className="text-xs text-[#E8E2D6]/80">Product orchestration UI</p>
+          </div>
+          <span className="rounded-full border border-[#B89B5E] px-3 py-1 text-xs text-[#B89B5E]">Dashboard</span>
+        </div>
+      </header>
+
       <div className="mx-auto grid max-w-7xl gap-4 px-4 py-6 sm:grid-cols-[220px_1fr]">
         <aside className="sm:sticky sm:top-4 sm:h-fit">
-          <div className="mb-3 rounded-2xl bg-gradient-to-r from-primary-700 via-primary-500 to-secondary-500 p-4 text-white shadow-panel">
-            <h1 className="text-lg font-bold tracking-tight">Tola Console</h1>
-            <p className="text-xs text-white/80">Product orchestration UI</p>
-          </div>
           <Navigation />
         </aside>
 
@@ -17,6 +23,13 @@ export function Layout() {
           <Outlet />
         </main>
       </div>
+
+      <footer className="mt-8 border-t border-[#B89B5E]/40 bg-[#1F3A2E] text-[#E8E2D6]">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 text-sm">
+          <p>Sumakpampa Platform</p>
+          <p className="text-[#B89B5E]">Built for resilient land data workflows</p>
+        </div>
+      </footer>
     </div>
   );
 }
