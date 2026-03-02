@@ -35,5 +35,23 @@ variable "environment_variables" {
   description = "Environment variables for the Lambda function"
   type        = map(string)
   default     = {}
-  sensitive   = true  # Mark as sensitive to prevent values from showing in logs
+  sensitive   = true # Mark as sensitive to prevent values from showing in logs
+}
+
+variable "enable_vpc" {
+  description = "Whether to attach Lambda to a VPC"
+  type        = bool
+  default     = false
+}
+
+variable "vpc_subnet_ids" {
+  description = "Subnet IDs for Lambda VPC attachment"
+  type        = list(string)
+  default     = []
+}
+
+variable "vpc_security_group_ids" {
+  description = "Security group IDs for Lambda VPC attachment"
+  type        = list(string)
+  default     = []
 }

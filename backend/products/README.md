@@ -17,6 +17,7 @@ Script de despliegue:
 
 El script hace:
 1. Empaqueta la app (`backend/products`) para Lambda con `Mangum`.
+   - Instala dependencias como wheels Linux (`manylinux2014_x86_64`, Python 3.10) para compatibilidad con Lambda.
 2. Ejecuta `terraform init/plan/apply` en `infrastructure/terraform/environments/dev`.
 3. Obtiene `lambda_function_name` y `api_gateway_url` desde Terraform outputs.
 4. Actualiza el código de Lambda con el zip generado.

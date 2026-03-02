@@ -20,6 +20,13 @@ resource "aws_iam_role_policy_attachment" "lambda_basic" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
+# Attach VPC access policy when Lambda runs inside a VPC.
+resource "aws_iam_role_policy_attachment" "lambda_vpc_access" {
+  count      = var.enable_vpc ? 1 : 0
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+}
+
 # Policy document for S3 access
 data "aws_iam_policy_document" "s3_access" {
   statement {
@@ -56,16 +63,24 @@ resource "aws_lambda_function" "this" {
   function_name = var.function_name
   role          = aws_iam_role.lambda_role.arn
   handler       = "main.handler"
-  runtime       = "python3.10"  # Changed from python3.11 to supported version
+  runtime       = "python3.10" # Changed from python3.11 to supported version
   memory_size   = var.memory_size
   timeout       = var.timeout
 
   # In a real project, replace this with your actual deployment package
-  filename      = data.archive_file.empty_lambda.output_path
+  filename         = data.archive_file.empty_lambda.output_path
   source_code_hash = data.archive_file.empty_lambda.output_base64sha256
 
   environment {
     variables = var.environment_variables
+  }
+
+  dynamic "vpc_config" {
+    for_each = var.enable_vpc ? [1] : []
+    content {
+      subnet_ids         = var.vpc_subnet_ids
+      security_group_ids = var.vpc_security_group_ids
+    }
   }
 }
 
@@ -99,7 +114,7 @@ EOF
 # Lambda function URL for direct invocation (optional, as we're using API Gateway)
 resource "aws_lambda_function_url" "this" {
   function_name      = aws_lambda_function.this.function_name
-  authorization_type = "NONE"  # For development only, use "AWS_IAM" in production
+  authorization_type = "NONE" # For development only, use "AWS_IAM" in production
 }
 
 # CloudWatch Log Group for Lambda logs with 30-day retention

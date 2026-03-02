@@ -36,9 +36,17 @@ rm -rf "$BUILD_DIR" "$DIST_DIR"
 mkdir -p "$BUILD_DIR" "$DIST_DIR"
 
 # Runtime dependencies used by backend/products app.
-"$PIP_BIN" install --quiet --target "$BUILD_DIR" \
+# Force Lambda-compatible Linux wheels to avoid native-module issues (e.g. pydantic_core on macOS).
+"$PIP_BIN" install --quiet \
+  --target "$BUILD_DIR" \
+  --platform manylinux2014_x86_64 \
+  --implementation cp \
+  --python-version 3.10 \
+  --abi cp310 \
+  --only-binary=:all: \
   fastapi==0.116.1 \
   mangum==0.19.0 \
+  exceptiongroup==1.2.2 \
   pymongo==4.8.0 \
   pydantic==2.8.2
 

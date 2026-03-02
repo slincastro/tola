@@ -5,6 +5,7 @@ mongodb_connection_string = ""
 auth_enabled              = false # Set to true if you want to enable Cognito authentication
 lambda_memory_size        = 512
 lambda_timeout            = 15
+lambda_enable_vpc         = true
 
 # ECS on EC2 MongoDB configuration
 enable_ecs_mongo    = true

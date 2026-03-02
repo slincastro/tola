@@ -30,10 +30,16 @@ module "lambda" {
   environment    = var.environment
   memory_size    = var.lambda_memory_size
   timeout        = var.lambda_timeout
+  enable_vpc     = var.lambda_enable_vpc && var.enable_ecs_mongo
+  vpc_subnet_ids = var.enable_ecs_mongo ? module.mongodb_ecs_ec2[0].private_subnet_ids : []
+  vpc_security_group_ids = var.enable_ecs_mongo ? [
+    module.mongodb_ecs_ec2[0].app_sg_id
+  ] : []
   s3_bucket_name = module.s3_bucket.bucket_name
   s3_bucket_arn  = module.s3_bucket.bucket_arn
 
   environment_variables = {
+    MONGODB_URI               = var.enable_ecs_mongo ? module.mongodb_ecs_ec2[0].mongo_connection_string_example : var.mongodb_connection_string
     MONGODB_CONNECTION_STRING = var.enable_ecs_mongo ? module.mongodb_ecs_ec2[0].mongo_connection_string_example : var.mongodb_connection_string
     S3_BUCKET_NAME            = module.s3_bucket.bucket_name
     AUTH_ENABLED              = var.auth_enabled

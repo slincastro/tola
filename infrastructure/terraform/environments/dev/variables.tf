@@ -41,6 +41,12 @@ variable "lambda_timeout" {
   default     = 15
 }
 
+variable "lambda_enable_vpc" {
+  description = "Whether Lambda should run inside VPC"
+  type        = bool
+  default     = true
+}
+
 variable "enable_ecs_mongo" {
   description = "Whether to deploy MongoDB on ECS EC2 with EBS"
   type        = bool
