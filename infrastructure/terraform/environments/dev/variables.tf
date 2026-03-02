@@ -106,3 +106,33 @@ variable "mongo_root_password" {
   type        = string
   sensitive   = true
 }
+
+variable "frontend_enabled" {
+  description = "Whether to provision frontend static hosting on S3 + CloudFront"
+  type        = bool
+  default     = true
+}
+
+variable "frontend_bucket_name" {
+  description = "S3 bucket name used for frontend static files"
+  type        = string
+  default     = null
+}
+
+variable "frontend_aliases" {
+  description = "Optional custom domain aliases for CloudFront"
+  type        = list(string)
+  default     = []
+}
+
+variable "frontend_acm_certificate_arn" {
+  description = "Optional ACM certificate ARN for CloudFront custom domains"
+  type        = string
+  default     = null
+}
+
+variable "frontend_price_class" {
+  description = "CloudFront price class for frontend distribution"
+  type        = string
+  default     = "PriceClass_100"
+}

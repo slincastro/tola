@@ -17,9 +17,13 @@ export function useProducts(initialFilters: ProductFilters = {}) {
 
       try {
         const response = await api.getProducts({ ...filters, cursor: reset ? undefined : nextCursor || undefined });
+        const safeItems = Array.isArray(response.items) ? response.items : [];
+        const safeNextCursor = typeof response.page?.nextCursor === "string" || response.page?.nextCursor === null
+          ? response.page.nextCursor
+          : null;
 
-        setItems((prev) => (reset ? response.items : [...prev, ...response.items]));
-        setNextCursor(response.page.nextCursor);
+        setItems((prev) => (reset ? safeItems : [...prev, ...safeItems]));
+        setNextCursor(safeNextCursor);
       } catch (err) {
         const message = err instanceof Error ? err.message : "Unexpected error";
         setError(message);

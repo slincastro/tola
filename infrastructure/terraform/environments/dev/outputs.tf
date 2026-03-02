@@ -48,3 +48,23 @@ output "ecs_mongo_private_ip_lookup_command" {
   description = "CLI command to fetch Mongo private IP if output is null during first apply"
   value       = var.enable_ecs_mongo ? module.mongodb_ecs_ec2[0].mongo_private_ip_lookup_command : null
 }
+
+output "frontend_bucket_name" {
+  description = "S3 bucket name for frontend static files"
+  value       = var.frontend_enabled ? module.frontend_static_site[0].bucket_name : null
+}
+
+output "frontend_cloudfront_distribution_id" {
+  description = "CloudFront distribution ID for frontend"
+  value       = var.frontend_enabled ? module.frontend_static_site[0].cloudfront_distribution_id : null
+}
+
+output "frontend_cloudfront_domain_name" {
+  description = "CloudFront domain name for frontend"
+  value       = var.frontend_enabled ? module.frontend_static_site[0].cloudfront_domain_name : null
+}
+
+output "frontend_url" {
+  description = "Public URL for frontend"
+  value       = var.frontend_enabled ? module.frontend_static_site[0].frontend_url : null
+}

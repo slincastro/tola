@@ -14,7 +14,7 @@ export function Layout() {
 
       <div className="mx-auto grid max-w-7xl gap-4 px-4 py-6 sm:grid-cols-[220px_1fr]">
         <aside className="sm:sticky sm:top-4 sm:h-fit">
-          <Navigation />
+          
         </aside>
 
         <main className="space-y-4">

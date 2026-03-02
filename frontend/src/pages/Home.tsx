@@ -9,8 +9,9 @@ export function HomePage() {
 
   const data = useMemo(() => {
     const bySector = new Map<string, number>();
-    items.forEach((product) => {
-      bySector.set(product.sector.name, (bySector.get(product.sector.name) || 0) + 1);
+    (items || []).forEach((product) => {
+      const sectorName = product?.sector?.name || "Unknown";
+      bySector.set(sectorName, (bySector.get(sectorName) || 0) + 1);
     });
 
     return Array.from(bySector.entries()).map(([sector, count]) => ({ sector, count }));

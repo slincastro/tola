@@ -22,6 +22,19 @@ module "api_gateway" {
   cognito_user_pool_id = var.auth_enabled ? module.cognito[0].user_pool_id : ""
 }
 
+module "frontend_static_site" {
+  source = "../../modules/frontend_static_site"
+  count  = var.frontend_enabled ? 1 : 0
+
+  name_prefix          = local.name_prefix
+  environment          = var.environment
+  api_gateway_url      = module.api_gateway.api_gateway_url
+  frontend_bucket_name = coalesce(var.frontend_bucket_name, "${local.name_prefix}-frontend")
+  aliases              = var.frontend_aliases
+  acm_certificate_arn  = var.frontend_acm_certificate_arn
+  price_class          = var.frontend_price_class
+}
+
 # Lambda function for API
 module "lambda" {
   source = "../../modules/lambda"

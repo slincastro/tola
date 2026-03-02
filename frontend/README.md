@@ -30,6 +30,34 @@ VITE_API_MODE=hybrid
 VITE_ENABLE_MOCK=true
 ```
 
+Production values are in `.env.production`:
+
+```env
+VITE_API_URL=/api
+VITE_API_MODE=real
+VITE_ENABLE_MOCK=false
+```
+
+## AWS Deploy (S3 + CloudFront)
+
+1. Provision infrastructure first:
+
+```bash
+cd ../infrastructure/terraform/environments/dev
+terraform init
+terraform plan
+terraform apply
+```
+
+2. Deploy frontend assets:
+
+```bash
+cd ../frontend
+./deploy.sh
+```
+
+The script builds the app, uploads `dist/` to the Terraform output bucket, and creates a CloudFront invalidation.
+
 ## Structure
 
 - `src/api`: API layer (`mockApi`, `productsApi`, `hybridApi`, `apiFactory`)
