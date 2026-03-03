@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
+import sandIcon from "@/assets/min-icon.png";
 
 export function Layout() {
   return (
@@ -7,7 +8,10 @@ export function Layout() {
       <header className="border-b border-[#B89B5E]/40 bg-[#1F3A2E] text-[#E8E2D6]">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
           <div>
-            <h1 className="text-xl font-bold tracking-tight">Sumakpampa</h1>
+            <h1 className="flex items-center gap-2 text-xl font-bold tracking-tight">
+              <img src={sandIcon} alt="Sand icon" className="h-10 w-10 rounded-sm object-cover" />
+              <span>Sumakpampa</span>
+            </h1>
           </div>
         </div>
       </header>
