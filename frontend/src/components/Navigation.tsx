@@ -2,8 +2,8 @@ import { Home, Package, PlusCircle } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 const links = [
-  { to: "/", label: "Home", icon: Home },
-  { to: "/products", label: "Products", icon: Package },
+  { to: "/", label: "Inicio", icon: Home },
+  { to: "/products", label: "Terrenos", icon: Package },
 ];
 
 export function Navigation() {

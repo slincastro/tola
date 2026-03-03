@@ -22,8 +22,7 @@ export function ProductsPage() {
         <p className="text-sm uppercase tracking-[0.2em] text-[#D7C28C]">Catalogo</p>
         <h2 className="mt-2 text-3xl font-semibold">Terrenos Disponibles</h2>
         <p className="mt-2 max-w-2xl text-sm text-[#E8E2D6]/90">
-          Lista de productos cargada desde el endpoint <code>/products</code>. Cada tarjeta muestra nombre, descripcion,
-          superficie y costo.
+          
         </p>
       </header>
 
