@@ -1,0 +1,48 @@
+{
+  "mid": "sumakpampa_malchingui_2c",
+  "name": "Terreno 2C - Sector San Juan, Malchingui",
+  "description": "Terreno de 2661.77 m2 ubicado en la parroquia Malchingui, sector San Juan, a una cuadra y media de la urbanizacion de los huertos familiares Los Alamos. Lote completamente plano, en zona rural y sector productivo, con clima templado, consolidacion urbana y excelente vista panoramica. Estado legal: escrituras al dia, planos aprobados por el municipio y escritura inmediata. Forma de pago: efectivo de contado.",
+  "surface": {
+    "value": 2661.77,
+    "unit": "m2"
+  },
+  "services": [
+    "Lote completamente plano",
+    "Sector productivo",
+    "Zona rural",
+    "Clima templado",
+    "Sector de consolidacion urbana",
+    "Vista panoramica"
+  ],
+  "price": {
+    "amount": 39926.55,
+    "currency": "USD",
+    "negotiable": false
+  },
+  "sector": {
+    "name": "San Juan",
+    "city": "Pedro Moncayo",
+    "province": "Pichincha",
+    "country": "Ecuador"
+  },
+  "location": {
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [-78.31095, 0.06058],
+          [-78.31060, 0.06058],
+          [-78.31060, 0.06083],
+          [-78.31095, 0.06058]
+        ]
+      ]
+    },
+    "centroid": {
+      "type": "Point",
+      "coordinates": [-78.31078, 0.06071]
+    }
+  },
+  "media": {
+    "photos": []
+  }
+}

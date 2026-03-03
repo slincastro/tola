@@ -74,3 +74,8 @@ curl -s "<API_GATEWAY_URL>/products?limit=1"
 cd backend/products
 uvicorn app:app --reload --port 8000
 ```
+
+
+
+python3 backend/products/product_loader/load_products.py \
+  --api-base-url https://454pqm0o6c.execute-api.us-east-1.amazonaws.com
