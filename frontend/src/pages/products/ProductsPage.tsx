@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useProducts } from "@/hooks/useProducts";
+import { Link } from "react-router-dom";
 
 const currencyFormatter = new Intl.NumberFormat("es-EC", {
   style: "currency",
@@ -43,22 +44,25 @@ export function ProductsPage() {
       {items.length > 0 ? (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {items.map((item) => (
-            <article key={item.id} className="rounded-2xl border border-[#CBB07A]/60 bg-white p-5 shadow-panel">
-              <h3 className="text-lg font-semibold text-[#1F3A2E]">{item.name}</h3>
-              <p className="mt-3 line-clamp-4 text-sm leading-relaxed text-slate-600">{item.description}</p>
-              <dl className="mt-5 space-y-3 text-sm">
-                <div className="flex items-center justify-between rounded-xl bg-[#F6F1E5] px-3 py-2">
-                  <dt className="font-medium text-slate-600">Superficie</dt>
-                  <dd className="font-semibold text-[#1F3A2E]">
-                    {areaFormatter.format(item.surface.value)} {item.surface.unit}
-                  </dd>
-                </div>
-                <div className="flex items-center justify-between rounded-xl bg-[#EAF2ED] px-3 py-2">
-                  <dt className="font-medium text-slate-600">Costo</dt>
-                  <dd className="font-semibold text-[#1F3A2E]">{currencyFormatter.format(item.price.amount)}</dd>
-                </div>
-              </dl>
-            </article>
+            <Link key={item.id} to={`/products/${item.id}`} state={{ product: item }} className="group block">
+              <article className="h-full rounded-2xl border border-[#CBB07A]/60 bg-white p-5 shadow-panel transition group-hover:-translate-y-0.5 group-hover:shadow-lg">
+                <h3 className="text-lg font-semibold text-[#1F3A2E]">{item.name}</h3>
+                <p className="mt-3 line-clamp-4 text-sm leading-relaxed text-slate-600">{item.description}</p>
+                <dl className="mt-5 space-y-3 text-sm">
+                  <div className="flex items-center justify-between rounded-xl bg-[#F6F1E5] px-3 py-2">
+                    <dt className="font-medium text-slate-600">Superficie</dt>
+                    <dd className="font-semibold text-[#1F3A2E]">
+                      {areaFormatter.format(item.surface.value)} {item.surface.unit}
+                    </dd>
+                  </div>
+                  <div className="flex items-center justify-between rounded-xl bg-[#EAF2ED] px-3 py-2">
+                    <dt className="font-medium text-slate-600">Costo</dt>
+                    <dd className="font-semibold text-[#1F3A2E]">{currencyFormatter.format(item.price.amount)}</dd>
+                  </div>
+                </dl>
+                <p className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-[#2E5B47]">Ver detalle</p>
+              </article>
+            </Link>
           ))}
         </div>
       ) : null}

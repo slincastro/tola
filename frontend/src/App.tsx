@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/useToast";
 
 const HomePage = lazy(() => import("@/pages/Home").then((m) => ({ default: m.HomePage })));
 const ProductsPage = lazy(() => import("@/pages/products/ProductsPage").then((m) => ({ default: m.ProductsPage })));
+const ProductDetailPage = lazy(() => import("@/pages/products/ProductDetailPage").then((m) => ({ default: m.ProductDetailPage })));
 const NewProductPage = lazy(() => import("@/pages/products/NewProductPage").then((m) => ({ default: m.NewProductPage })));
 const NotFoundPage = lazy(() => import("@/pages/NotFound").then((m) => ({ default: m.NotFoundPage })));
 
@@ -19,6 +20,7 @@ export default function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/products" element={<ProductsPage />} />
+            <Route path="/products/:productId" element={<ProductDetailPage />} />
             <Route path="/products/new" element={<NewProductPage onCreated={(message) => showToast("success", message)} />} />
             <Route path="/home" element={<Navigate to="/" replace />} />
             <Route path="*" element={<NotFoundPage />} />
